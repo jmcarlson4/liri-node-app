@@ -1,13 +1,35 @@
 require("dotenv").config();
+var axios = require('axios');
+var keys = require("./keys.js");
+//console.log(keys); 
+var Spotify = require('node-spotify-api');
+var spotify = new Spotify(keys.spotify);
 
-var fs = require('fs');
+// var action = process.argv[2];
+// var song = process.argv[3];
+// song = song.replace(" " , "%20");
 
-fs.readFile('random.txt', 'utf8', function(err, data){
-//if (err){
-   // return console.log(err);
-//}
-//console.log(data);
+
+ 
+
+spotify.search({ type: 'track', query: 'All the Small Things' }, function(err, data) {
+  if (err) {
+    return console.log('Error occurred: ' + err);
+  }
+ 
+console.log(JSON.stringify(data.tracks.items[0].artists[0].name, null, 2)); 
+//console.log(data.tracks.items[0].artists.length);
+JSON.stringify(data,null,2);
 });
+// do-what-it-says
+// var fs = require('fs');
+
+// fs.readFile('random.txt', 'utf8', function(err, data){
+// //if (err){
+//    // return console.log(err);
+// //}
+// //console.log(data);
+// });
 
 // function random(opt1, opt2){
 //     if (opt1 === 'spotify-this-song'){
@@ -16,31 +38,26 @@ fs.readFile('random.txt', 'utf8', function(err, data){
         
 // }
 
-var axios = require('axios');
 
 
-var spotify = require("keys.js"); 
-spotify = Spotify(keys.spotify);
-//var action = process.argv[2];
-var song = process.argv[3];
-song = song.replace(" " , "%20");
+//spotify-this-song
 
-songUrl () {
-    axios.get("https:api.spotify.com/v1/artists/" + song + spotify).then(response => {
-        console.log(response);
-        })};
 
-// $.ajax({
-//     url: songUrl,
-//     method: "GET"
-// }).then(function(response){
-// (JSON.stringify(response))
-// });
-$
+
+// songUrl (); {
+//     axios.get("https:api.spotify.com/v1/artists/" + song + spotify).then(response => {
+//         console.log(response);
+//         })};
+
+
+
+//  songs(action, song);
+
+
 
 var argument = process.argv[2];
 var movieName = process.argv[3];
-movieName = movieName.replace(" ", "%20");
+//movieName = movieName.replace(" ", "%20");
 function movie(movieName){
     var movieUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
     axios.get(movieUrl).then(function(response){
@@ -55,11 +72,11 @@ function movies(opt1, opt2){
         movie(opt2);
     }
 }
-movies(argument, movieName);
+//movies(argument, movieName);
 
 var argument1 = process.argv[2];
 var artist = process.argv[3];
-artist = artist.replace(" ",  "%20");
+//artist = artist.replace(" ",  "%20");
 
  function bands(artist){
     var artistUrl = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
