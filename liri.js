@@ -28,10 +28,11 @@ var argument = process.argv[2];
 var song = "";
 //song = song.replace(" ", "%20");
 
-for (var i = 3;  i < entireStringArg.length; i++){
-    song = song + " " + entireStringArg[i];
+for (var i = 3; i < entireStringArg.length; i++) {
+    if (i > 3) { song = song + " " + entireStringArg[i] }
+    else { song += entireStringArg[i] };
 };
-console.log(song);
+//console.log(song);
 
 commands(argument, song);
 
@@ -52,7 +53,7 @@ function music(song) {
 
 function doWhatItSays() {
     var fs = require("fs");
-
+    
     fs.readFile("random.txt", "utf8", function (err, data) {
 
         if (err) {
@@ -88,8 +89,10 @@ function bands(artist) {
     // var artist = process.argv.slice(3).join(" ");
     var artist = song;
     artist = artist.replace(" ", "%20");
+    console.log(artist);
     var artistUrl = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
     axios.get(artistUrl).then(function (response) {
+        //console.log(response.data);
         console.log(response.data[0].venue.name);
         console.log(response.data[0].venue.city);
         console.log(response.data[0].datetime);
